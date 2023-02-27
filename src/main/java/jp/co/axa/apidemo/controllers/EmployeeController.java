@@ -1,6 +1,8 @@
 package jp.co.axa.apidemo.controllers;
 
 import jp.co.axa.apidemo.entities.Employee;
+import jp.co.axa.apidemo.exceptions.EmployeeExistsException;
+import jp.co.axa.apidemo.exceptions.EmployeeNotFoundException;
 import jp.co.axa.apidemo.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,23 +26,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{employeeId}")
-    public Employee getEmployee(@PathVariable(name="employeeId")Long employeeId){
+    public Employee getEmployee(@PathVariable(name="employeeId")Long employeeId) throws EmployeeNotFoundException {
         return employeeService.getEmployee(employeeId);
     }
 
     @PostMapping("/employees")
-    public void saveEmployee(Employee employee){
+    public void saveEmployee(Employee employee) throws EmployeeExistsException {
         employeeService.saveEmployee(employee);
     }
 
     @DeleteMapping("/employees/{employeeId}")
-    public void deleteEmployee(@PathVariable(name="employeeId")Long employeeId){
+    public void deleteEmployee(@PathVariable(name="employeeId")Long employeeId) throws EmployeeNotFoundException {
         employeeService.deleteEmployee(employeeId);
     }
 
     @PutMapping("/employees/{employeeId}")
     public void updateEmployee(@RequestBody Employee employee,
-                               @PathVariable(name="employeeId")Long employeeId){
+                               @PathVariable(name="employeeId")Long employeeId) throws EmployeeNotFoundException{
         employeeService.updateEmployee(employee);
     }
 

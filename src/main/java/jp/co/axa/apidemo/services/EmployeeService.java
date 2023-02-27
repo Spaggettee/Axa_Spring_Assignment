@@ -1,18 +1,20 @@
 package jp.co.axa.apidemo.services;
 
 import jp.co.axa.apidemo.entities.Employee;
+import jp.co.axa.apidemo.exceptions.EmployeeExistsException;
+import jp.co.axa.apidemo.exceptions.EmployeeNotFoundException;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    public List<Employee> retrieveEmployees();
+    List<Employee> retrieveEmployees();
 
-    public Employee getEmployee(Long employeeId);
+    Employee getEmployee(Long employeeId) throws EmployeeNotFoundException;
 
-    public void saveEmployee(Employee employee);
+    void saveEmployee(Employee employee) throws EmployeeExistsException;
 
-    public void deleteEmployee(Long employeeId);
+    void deleteEmployee(Long employeeId) throws EmployeeNotFoundException;
 
-    public void updateEmployee(Employee employee);
+    void updateEmployee(Employee employee) throws EmployeeNotFoundException;
 }

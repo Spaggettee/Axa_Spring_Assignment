@@ -1,9 +1,9 @@
 package jp.co.axa.apidemo.services;
 
-import javassist.NotFoundException;
 import jp.co.axa.apidemo.entities.Employee;
+import jp.co.axa.apidemo.exceptions.EmployeeExistsException;
+import jp.co.axa.apidemo.exceptions.EmployeeNotFoundException;
 import jp.co.axa.apidemo.repositories.EmployeeRepository;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,26 +27,42 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employees;
     }
 
-    public Employee getEmployee(Long employeeId) {
-
-        Optional<Employee> optEmp = employeeRepository.findById(employeeId);
-        return optEmp.get();
+    public Employee getEmployee(Long employeeId) throws EmployeeNotFoundException {
+        return this.findEmployee(employeeId);
     }
 
-    public void saveEmployee(Employee employee) {
+    public void saveEmployee(Employee employee) throws EmployeeExistsException {
+        Optional<Employee> existingEmployee = employeeRepository.findById(employee.getId());
+        if (existingEmployee.isPresent()) {
+            throw new EmployeeExistsException();
+        }
 
         employeeRepository.save(employee);
         System.out.println("Employee Saved Successfully");
     }
 
     public void deleteEmployee(Long employeeId) {
+        this.findEmployee(employeeId);
 
         employeeRepository.deleteById(employeeId);
-        System.out.println("Employee Deleted Successfully");
     }
 
     public void updateEmployee(Employee employee) {
+        Employee existingEmployee = this.findEmployee(employee.getId());
+
+        existingEmployee.setDepartment(employee.getDepartment());
+        existingEmployee.setName(employee.getName());
+        existingEmployee.setSalary(employee.getSalary());
 
         employeeRepository.save(employee);
+    }
+
+    public Employee findEmployee(Long employeeId) throws EmployeeNotFoundException {
+
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (!employee.isPresent()) {
+            throw new EmployeeNotFoundException();
+        }
+        return employee.get();
     }
 }
