@@ -1,0 +1,169 @@
+---
+openapi: 3.0.0
+info:
+  title: Axa Demo
+  description: The coding assignment for an application with Axa
+  version: 1.0.0
+#servers:
+#  - url: http://{host}:{port}
+#    description: local development
+#    variables:
+#      host:
+#        default: localhost
+#      port:
+#        default: '8080'
+security:
+  - [ ]
+paths:
+
+  /employees:
+    get:
+      tags:
+        - employees
+      operationId: employeesGetAll
+      summary: returns all employees in the database
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employeesGetAllResponse'
+    post:
+      tags:
+        - employees
+      operationId: employeeCreate
+      summary: creates a new employee entity in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employeePostRequest'
+      responses:
+        '200':
+          description: OK
+
+  /employees/{employeeId}:
+    get:
+      tags:
+        - employees
+      operationId: employeeGet
+      summary: retrieves a specific employee from the database
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employeeGetResponse'
+    delete:
+      tags:
+        - employees
+      operationId: employeeDelete
+      summary: deletes a specific employee in the database
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      responses:
+        '200':
+          description: OK
+    put:
+      tags:
+        - employees
+      operationId: employeeUpdate
+      summary: updates a specific employee in the database
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employeePutRequest'
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    employeesGetAllResponse:
+      type: list
+      items:
+        $ref: '#/components/schemas/employee'
+
+    employeeGetResponse:
+      type: object
+      required:
+        - employee
+      properties:
+        id:
+          $ref: '#/components/schemas/employee'
+
+    employeePutRequest:
+      type: object
+      required:
+        - employee
+      properties:
+        id:
+          $ref: '#/components/schemas/employee'
+
+    employeePostRequest:
+      type: object
+      required:
+        - employee
+      properties:
+        id:
+          $ref: '#/components/schemas/employee'
+
+    employee:
+      type: object
+      required:
+        - id
+        - department
+        - salary
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          $ref: '#/components/schemas/name'
+        department:
+          $ref: '#/components/schemas/department'
+        salary:
+          $ref: '#/components/schemas/salary'
+
+    id:
+      type: integer
+      minimum: 0
+      example: 0
+
+    name:
+      type: string
+      example: john
+
+    department:
+      type: string
+      example: accounting
+
+    salary:
+      type: integer
+      minimum: 0
+      maximum: 99999999999
+      example: 30000
+
+
+tags:
+  - name: employees
