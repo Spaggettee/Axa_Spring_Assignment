@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EMPLOYEE")
-public class Employee {
+public class EmployeeEntity {
 
     @Getter
     @Setter

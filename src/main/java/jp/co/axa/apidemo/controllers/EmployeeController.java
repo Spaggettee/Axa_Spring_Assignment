@@ -1,6 +1,6 @@
 package jp.co.axa.apidemo.controllers;
 
-import jp.co.axa.apidemo.entities.Employee;
+import jp.co.axa.apidemo.entities.EmployeeEntity;
 import jp.co.axa.apidemo.exceptions.EmployeeExistsException;
 import jp.co.axa.apidemo.exceptions.EmployeeNotFoundException;
 import jp.co.axa.apidemo.services.EmployeeService;
@@ -21,18 +21,18 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> getEmployees() {
+    public List<EmployeeEntity> getEmployees() {
         return employeeService.retrieveEmployees();
     }
 
     @GetMapping("/employees/{employeeId}")
-    public Employee getEmployee(@PathVariable(name="employeeId")Long employeeId) throws EmployeeNotFoundException {
+    public EmployeeEntity getEmployee(@PathVariable(name="employeeId")Long employeeId) throws EmployeeNotFoundException {
         return employeeService.getEmployee(employeeId);
     }
 
     @PostMapping("/employees")
-    public void saveEmployee(Employee employee) throws EmployeeExistsException {
-        employeeService.saveEmployee(employee);
+    public void saveEmployee(EmployeeEntity employeeEntity) throws EmployeeExistsException {
+        employeeService.saveEmployee(employeeEntity);
     }
 
     @DeleteMapping("/employees/{employeeId}")
@@ -41,9 +41,9 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees/{employeeId}")
-    public void updateEmployee(@RequestBody Employee employee,
+    public void updateEmployee(@RequestBody EmployeeEntity employeeEntity,
                                @PathVariable(name="employeeId")Long employeeId) throws EmployeeNotFoundException{
-        employeeService.updateEmployee(employee);
+        employeeService.updateEmployee(employeeEntity);
     }
 
 }
