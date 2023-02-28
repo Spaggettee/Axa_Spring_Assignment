@@ -1,11 +1,11 @@
-package .models;
+package org.openapitools.model;
 
 import java.net.URI;
 import java.util.Objects;
-import .models.Employee;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.openapitools.model.Employee;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -21,7 +21,7 @@ import javax.annotation.Generated;
  */
 
 @JsonTypeName("employeePostRequest")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-27T21:17:04.514+09:00[Asia/Tokyo]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-02-28T16:37:25.536+09:00[Asia/Tokyo]")
 public class EmployeePostRequest {
 
   @JsonProperty("id")
